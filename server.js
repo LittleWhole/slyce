@@ -28,7 +28,20 @@ client.on("guildCreate", guild => {
   sendGuildChannel.send("Hello! Thanks for adding me - **Slyce**! I am developed by LittleWhole#2107. Do /s/help for commands!");
   client.user.setGame(`/s/help | on ${client.guilds.size} servers`);
 });
-
+var f = [];
+function factorial (n) {
+  if (n == 0 || n == 1)
+    return 1;
+  if (f[n] > 0)
+    return f[n];
+  return f[n] = factorial(n-1) * n;
+};
+function clean(text) {
+  if (typeof(text) === "string")
+    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+  else
+      return text;
+}
 client.on('message', async message => {
 
    
@@ -106,6 +119,48 @@ const command = args.shift().toLowerCase();
     client.login(token);
     message.channel.send(`:white_check_mark: **The bot has been successfully restarted.**`);
   }
+  if (command === 'add') {
+      var num1 = parseInt(args[0]);
+      var num2 = parseInt(args[1]);
+      var ans = num1 + num2
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+  
+		if (command === 'multiply') {
+      var num1 = parseInt(args[0]);
+      var num2 = parseInt(args[1]);
+      var ans = num1 * num2
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+		if (command === 'subtract') {
+      var num1 = parseInt(args[0]);
+      var num2 = parseInt(args[1]);
+      var ans = num1 - num2
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+		if (command === 'divide') {
+      var num1 = parseInt(args[0]);
+      var num2 = parseInt(args[1]);
+      var ans = num1 / num2
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+		if (command === 'factorial') {
+      var num1 = parseInt(args[0]);
+      var ans = factorial(num1);
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+      if (command === 'random') {
+      var num1 = parseInt(args[0]);
+      var num2 = parseInt(args[1]);
+      var ans = Math.floor(Math.random() * num2) + num1
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+      if (command === 'sqrt') {
+      var num1 = parseInt(args[0]);
+      var ans = Math.sqrt(num1)
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+
   if (message.content.startsWith(prefix + "yt")) {
               message.delete()
               let args = message.content.split(' ').slice(1)
