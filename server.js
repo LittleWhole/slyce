@@ -342,14 +342,26 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
     if (message.content.indexOf("?") !== message.content.length - 1) return message.channel.send("That doesn't look like a question to me!");
         //Responses
         const responses = [
-            "Definitely.",
+            "Yes, definitely.",
             "Most likely.",
             "Cannot predict now.",
             "You may rely on it.",
-            "Maybe, maybe not.",
-            "It's a no from me.",
-            "Absolutely not!",
-            "Eeh, no."
+            "Reply hazy, try again.",
+            "Very doubtful.",
+            "It is decidedly so.",
+            "No.",
+            "Ask again later.",
+            "It is certain.",
+            "Concentrate and ask again.",
+            "My reply is no.",
+            "Outlook good.",
+            "Signs point to yes.",
+            "My sources say no.",
+            "Outlook not so good.",
+            "Don't count on it.",
+            "Better not tell you now.",
+            "Without a doubt.",
+            "As I see it, yes.",
         ];
 
         // Send a response
