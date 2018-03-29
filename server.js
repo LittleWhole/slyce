@@ -9,7 +9,6 @@ const message_log = new PersistentCollection({name: 'Message_log'}); //For prefi
 const defaultSettings = { //For prefix
   prefix: "/s/"
 }
-const prefix = "/s/"
 const token = process.env.SECRET
 const ownerID = "230880116035551233"
 const gosealeID = "229016449593769984"
@@ -76,7 +75,7 @@ const command = args.shift().toLowerCase();
     .setTitle(`**Slyce Commands**`)
     .addField(`**Server Prefix:** ${prefix}`, `${prefix}prefix to change`)
     .addField(`**Information Commands:**`, `help ping invite`)
-    .addField(`**Moderation Commands:**`, `warn kick ban mute`)
+    .addField(`**Moderation Commands:**`, `warn kick ban mute purge disablechannel`)
     .addField(`**Fun Commands:**`, `8ball cat`)
     .addField(`**Music Commands:**`, `yt stopyt`)
     .addField(`**Math Commands:**`, `add subtract multiply divide factorial sqrt exponent pythagorean`)
@@ -177,8 +176,9 @@ if (message.author.id !== ownerID && message.author.id !== gosealeID) return mes
   if (!modlog) return message.reply('I cannot find a mod-log channel');
   if (reason.length < 1) return message.reply('You must supply a reason for the warning.');
   if (message.mentions.users.size < 1) return message.reply('You must mention someone to warn them.').catch(console.error);
+    message.channel.send(`**:warning: Warned user ${user}.**`);
   const embed = new Discord.RichEmbed()
-  .setColor(0x00AE86)
+  .setColor(0xbb7de8)
   .setTimestamp()
   .setDescription(`**Action:** Warning\n**Target:** ${user.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason}`);
   return client.channels.get(modlog.id).send({embed});
@@ -188,6 +188,7 @@ if (message.author.id !== ownerID && message.author.id !== gosealeID) return mes
   message.channel.fetchMessages({
     limit: messagecount
   }).then(messages => message.channel.bulkDelete(messages));
+    message.channel.send(`:wastebasket: **Successfully purged ${messagecount} messages!**`)
 }
     if (command === 'mute') {
     let reason = args.slice(1).join(' ');
@@ -198,8 +199,9 @@ if (message.author.id !== ownerID && message.author.id !== gosealeID) return mes
   if (!muteRole) return message.reply('I cannot find a mute role').catch(console.error);
   if (reason.length < 1) return message.reply('You must supply a reason for the mute.').catch(console.error);
   if (message.mentions.users.size < 1) return message.reply('You must mention someone to mute them.').catch(console.error);
+      message.channel.send(`**:mute: Un/muted user ${user}.**`);
   const embed = new Discord.RichEmbed()
-    .setColor(0x00AE86)
+    .setColor(0xbb7de8)
     .setTimestamp()
     .setDescription(`**Action:** Un/mute\n**Target:** ${user.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason}`);
 
@@ -216,14 +218,14 @@ if (message.author.id !== ownerID && message.author.id !== gosealeID) return mes
   }
 }
 
-if (command === 'lockdown') {
+if (command === 'disablechannel') {
 if (!client.lockit) client.lockit = [];
   let time = args.join(' ');
   let validUnlocks = ['release', 'unlock'];
   const embed = new Discord.RichEmbed()
-  .setColor(0x00AE86)
+  .setColor(0xbb7de8)
   .setTimestamp()
-  .addField('Action:', 'Lockdown')
+  .addField('Action:', 'Channel Lockdown')
   .addField('Channel:', message.channel)
   .addField('Moderator:', `${message.author.username}#${message.author.discriminator}`)
   .addField('Time:', `${ms(ms(time), { long:true })}`);
@@ -268,9 +270,9 @@ if (!client.lockit) client.lockit = [];
 
   if (!message.guild.member(user).bannable) return message.reply('I cannot ban that member');
   message.guild.ban(user, 2);
-
+  message.channel.send(`**:hammer: Banned user ${user}.**`);
   const embed = new Discord.RichEmbed()
-    .setColor(0x00AE86)
+    .setColor(0xbb7de8)
     .setTimestamp()
     .setDescription(`**Action:** Ban\n**Target:** ${user.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason}`);
   return client.channels.get(modlog.id).send({embed});
@@ -285,9 +287,9 @@ let reason = args.slice(1).join(' ');
 
   if (!message.guild.member(user).kickable) return message.reply('I cannot kick that member');
   message.guild.member(user).kick();
-
+  message.channel.send(`**:boot: Kicked user ${user}.**`);
   const embed = new Discord.RichEmbed()
-    .setColor(0x00AE86)
+    .setColor(0xbb7de8)
     .setTimestamp()
     .setDescription(`**Action:** Kick\n**Target:** ${user.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason}`);
   return client.channels.get(modlog.id).send({embed});
@@ -302,6 +304,7 @@ let reason = args.slice(1).join(' ');
   if (reason.length < 1) return message.reply('You must supply a reason for the unban.');
   if (!user) return message.reply('You must supply a User Resolvable, such as a user id.').catch(console.error);
   message.guild.unban(user);
+  message.channel.send(`**:ok_hand::skin-tone-1: Unbanned user ${user}.**`);
 }
   if (command === 'repeat') {
 let times = parseInt(args[0])
