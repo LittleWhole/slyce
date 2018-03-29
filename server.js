@@ -1,13 +1,15 @@
 const Discord = require('discord.js');
 const dispatcher = require('streamdispatch');
 const ytdl          = require('ytdl-core');
+const getYouTubeID = require('get-youtube-id');
+const fetchVideoInfo = require('youtube-info');
 const ms = require('ms');
 const client = new Discord.Client
 const PersistentCollection = require('enmap');       //For prefix
 const guildSettings = new PersistentCollection({name: 'guildSettings'}); //For prefix
 const message_log = new PersistentCollection({name: 'Message_log'}); //For prefix
 const defaultSettings = { //For prefix
-  prefix: "/s/"
+  prefix: "/beta/"
 }
 const token = process.env.SECRET
 const ownerID = "230880116035551233"
@@ -59,7 +61,7 @@ message.channel.send({
 embed: {
 title: `Prefix was changed!`,
 description: `Prefix was changed to **${thisConf.prefix}**`,
-color: 0xbb7dea
+color: 0xbb7de8
 }
 });
 }
@@ -107,11 +109,26 @@ const command = args.shift().toLowerCase();
   if (message.content.startsWith(prefix + "yt")) {
               message.delete()
               let args = message.content.split(' ').slice(1)
-              if (!args[0]) return (message.channel.send({embed: { title: ":x:Error", "color": 16711680, description: `**${prefix}URLplay [Youtube url]**`}}).then(m => {m.delete(15000);}))
+              if (!args[0]) return (message.channel.send({embed: { title: ":x:Error", "color": 16711680, description: `**${prefix}yt [Youtube url]**`}}).then(m => {m.delete(15000);}))
               if (!message.guild) return;
               if (message.member.voiceChannel) {
                   message.member.voiceChannel.join().then(connection => {
                   message.reply('I have successfully connected to the channel!').then(m => {m.delete(5000)});
+                    var VideoID = getYouTubeID(args[0]);
+          fetchVideoInfo(VideoID, function (err, videoInfo) { if (err) throw new Error(err); 
+                   var Vd = videoInfo; 
+                  
+    let richEmbed = new Discord.RichEmbed()
+.setTitle(`Now Playing:`)
+.setDescription(`**Title:** __[${Vd.title}](${Vd.url})__ 
+**By: **${Vd.owner}
+**Date published: **${Vd.datePublished} 
+**:eye: **${Vd.views}
+**:thumbsup::skin-tone-1: **${Vd.likeCount} | **:thumbsdown::skin-tone-1: **${Vd.dislikeCount}
+`)
+                  .setColor(0xbb7de8)
+                  //.setThumbnail(`${user.avatarURL}`)
+                  message.channel.send({embed: richEmbed});});
                   const stream = ytdl(args[0], {filter : 'audioonly'});
                   const dispatcher = connection.playStream(stream);
         })
@@ -336,7 +353,7 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
         ];
 
         // Send a response
-        message.channel.send(`**__${message.member.displayName}__ asks: __${args.join(" ")}__**\n${responses[Math.floor(Math.random() * responses.length)]}`);
+        message.channel.send(`**__${message.member.displayName}__ :8ball: __${args.join(" ")}__**\n${responses[Math.floor(Math.random() * responses.length)]}`);
   }
   if (command === 'cat') {
     Object.defineProperty(this, "cats", {
@@ -421,7 +438,7 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
         });
 
         Object.defineProperty(this, "chosen", { value: this.cats[Math.floor(Math.random() * this.cats.length)], writable: true });
-    message.channel.send(`[**Cat**] ${this.chosen}`);
+    message.channel.send(`*Meow* ${this.chosen}`);
         // Get a new cat
         this.chosen = this.cats[Math.floor(Math.random() * this.cats.length)];
   }
