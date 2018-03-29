@@ -14,7 +14,6 @@
     "streamdispatch": "^0.1.0",
     "opusscript": "^0.0.6",
     "ytdl-core": "^0.20.2",
-    "djs-collection-persistent": "^0.1.5",
     "ms": "^2.1.1",
     "enmap": "^2.0.1"
   },
