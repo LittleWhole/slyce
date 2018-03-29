@@ -15,7 +15,9 @@
     "opusscript": "^0.0.6",
     "ytdl-core": "^0.20.2",
     "ms": "^2.1.1",
-    "enmap": "^2.0.1"
+    "enmap": "^2.0.1",
+    "get-youtube-id": "^1.0.0",
+    "youtube-info": "^1.2.0"
   },
   "engines": {
     "node": "9.x"
