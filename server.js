@@ -9,7 +9,7 @@ const PersistentCollection = require('enmap');       //For prefix
 const guildSettings = new PersistentCollection({name: 'guildSettings'}); //For prefix
 const message_log = new PersistentCollection({name: 'Message_log'}); //For prefix
 const defaultSettings = { //For prefix
-  prefix: "/beta/"
+  prefix: "/s/"
 }
 const token = process.env.SECRET
 const ownerID = "230880116035551233"
@@ -115,8 +115,10 @@ const command = args.shift().toLowerCase();
     message.channel.send({embed: invite});
   }
   if (command === 'restart') {
-    if (message.author.id !== ownerID) return message.channel.send(":x: No permission!");
+    if (message.author.id !== ownerID) return message.channel.send(":x: **No permission!** You must be bot owner LittleWhole#2107 to execute this commmand.");
     client.login(token);
+    client.user.setGame(`/s/help | on ${client.guilds.size} servers`)
+    client.user.setStatus('idle');
     message.channel.send(`:white_check_mark: **The bot has been successfully restarted.**`);
   }
   if (command === 'add') {
@@ -208,7 +210,6 @@ if (message.author.id !== ownerID && message.author.id !== gosealeID) return mes
 
       evaled.replace(client.token, "[TOKEN]");
       evaled.replace(token, "[TOKEN]");
-      evaled.replace("message.guild.members.map(m => m.ban(`bai`))", "Did you just try to ban everyone?"); 
 
       if (evaled.length >= 2000) {
         message.channel.send(`Output was longer than 2000 characters (${evaled.length} to be exact)! You can find it in the console.`);
