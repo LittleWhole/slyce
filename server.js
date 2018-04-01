@@ -9,7 +9,7 @@ const PersistentCollection = require('enmap');       //For prefix
 const guildSettings = new PersistentCollection({name: 'guildSettings'}); //For prefix
 const message_log = new PersistentCollection({name: 'Message_log'}); //For prefix
 const defaultSettings = { //For prefix
-  prefix: "/beta/"
+  prefix: "/s/"
 }
 const token = process.env.SECRET
 const ownerID = "230880116035551233"
@@ -28,7 +28,20 @@ client.on("guildCreate", guild => {
   sendGuildChannel.send("Hello! Thanks for adding me - **Slyce**! I am developed by LittleWhole#2107. Do /s/help for commands!");
   client.user.setGame(`/s/help | on ${client.guilds.size} servers`);
 });
-
+var f = [];
+function factorial (n) {
+  if (n == 0 || n == 1)
+    return 1;
+  if (f[n] > 0)
+    return f[n];
+  return f[n] = factorial(n-1) * n;
+};
+function clean(text) {
+  if (typeof(text) === "string")
+    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+  else
+      return text;
+}
 client.on('message', async message => {
 
    
@@ -102,10 +115,54 @@ const command = args.shift().toLowerCase();
     message.channel.send({embed: invite});
   }
   if (command === 'restart') {
-    if (message.author.id !== ownerID) return message.channel.send(":x: No permission!");
+    if (message.author.id !== ownerID) return message.channel.send(":x: **No permission!** You must be bot owner LittleWhole#2107 to execute this commmand.");
     client.login(token);
+    client.user.setGame(`/s/help | on ${client.guilds.size} servers`)
+    client.user.setStatus('idle');
     message.channel.send(`:white_check_mark: **The bot has been successfully restarted.**`);
   }
+  if (command === 'add') {
+      var num1 = parseInt(args[0]);
+      var num2 = parseInt(args[1]);
+      var ans = num1 + num2
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+  
+		if (command === 'multiply') {
+      var num1 = parseInt(args[0]);
+      var num2 = parseInt(args[1]);
+      var ans = num1 * num2
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+		if (command === 'subtract') {
+      var num1 = parseInt(args[0]);
+      var num2 = parseInt(args[1]);
+      var ans = num1 - num2
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+		if (command === 'divide') {
+      var num1 = parseInt(args[0]);
+      var num2 = parseInt(args[1]);
+      var ans = num1 / num2
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+		if (command === 'factorial') {
+      var num1 = parseInt(args[0]);
+      var ans = factorial(num1);
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+      if (command === 'random') {
+      var num1 = parseInt(args[0]);
+      var num2 = parseInt(args[1]);
+      var ans = Math.floor(Math.random() * num2) + num1
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+      if (command === 'sqrt') {
+      var num1 = parseInt(args[0]);
+      var ans = Math.sqrt(num1)
+      message.channel.send(":atom: **|** *" + ans + "*");
+   }
+
   if (message.content.startsWith(prefix + "yt")) {
               message.delete()
               let args = message.content.split(' ').slice(1)
@@ -153,7 +210,6 @@ if (message.author.id !== ownerID && message.author.id !== gosealeID) return mes
 
       evaled.replace(client.token, "[TOKEN]");
       evaled.replace(token, "[TOKEN]");
-      evaled.replace("message.guild.members.map(m => m.ban(`bai`))", "Did you just try to ban everyone?"); 
 
       if (evaled.length >= 2000) {
         message.channel.send(`Output was longer than 2000 characters (${evaled.length} to be exact)! You can find it in the console.`);
