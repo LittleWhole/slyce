@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const dispatcher = require('streamdispatch');
-const ytdl          = require('ytdl-core');
+const ytdl = require('ytdl-core');
 const getYouTubeID = require('get-youtube-id');
 const fetchVideoInfo = require('youtube-info');
 const ms = require('ms');
@@ -79,10 +79,9 @@ color: 0xbb7de8
 });
 }
   //===================================================================================================================================================================== cmd prefix end
-    
+if (!message.content.startsWith(prefix)) return;
 const args = message.content.slice(prefix.length).trim().split(/ +/g);
 const command = args.shift().toLowerCase();
-  
   
   
   if (command === 'help') {
