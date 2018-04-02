@@ -59,7 +59,7 @@ if (message.content.startsWith(prefix + 'prefix')) {
 message.delete()
 if (!message.guild.member(message.author).hasPermission("MANAGE_GUILD") &&  message.author.id !== ownerID) return message.channel.send({
 embed: {
-description: `**You can not do that** ${message.author}**!** :no_entry: \nYou need to have the permission __Manage Messages__ to use *${prefix}prefix*.`,
+description: `**You can't do that!** ${message.author}**!** :no_entry: \nYou need to have the permission __MANAGE_MESSAGES__ to use *${prefix}prefix*.`,
 color: 0xbb7de8
 }
 })
@@ -92,7 +92,7 @@ const command = args.shift().toLowerCase();
     .addField(`**Information Commands:**`, `help ping invite`)
     .addField(`**Moderation Commands:**`, `warn kick ban mute purge disablechannel`)
     .addField(`**Fun Commands:**`, `8ball cat`)
-    .addField(`**Music Commands:**`, `yt stopyt`)
+    .addField(`**Music Commands:**`, `play stop`)
     .addField(`**Math Commands:**`, `add subtract multiply divide factorial sqrt exponent pythagorean`)
     .addField(`**Development Commands:**`, `eval restart`)
     .setColor("bb7de8")
@@ -162,11 +162,24 @@ const command = args.shift().toLowerCase();
       var ans = Math.sqrt(num1)
       message.channel.send(":atom: **|** *" + ans + "*");
    }
+  if (command === 'pythagorean') {
+  var num1 = args[0]
+  var num2 = args[1]
+  var num3 = Math.pow(num1, 2) + Math.pow(num2, 2)
+  var ans = Math.sqrt(num3)
+  message.channel.send(":asterisk: **Formula: a² + b² = c²** or **c = √(a² + b²)**\n:atom: **|** *a²: " + Math.pow(num1, 2) + "*\n:atom: **|** *b²: " + Math.pow(num2, 2) + "*\n:atom: **|** *c²: " + num3 + "*\n:atom: **|** *Answer: " + ans + "*")
+}
+   if (command === 'exponent') {
+ var num1 = args[0];
+ var num2 = args[1];
+ var ans = Math.pow(num1, num2);
+message.channel.send(":atom: **|** *" + ans + "*")
+ }
 
-  if (message.content.startsWith(prefix + "yt")) {
+  if (message.content.startsWith(prefix + "play")) {
               message.delete()
               let args = message.content.split(' ').slice(1)
-              if (!args[0]) return (message.channel.send({embed: { title: ":x:Error", "color": 16711680, description: `**${prefix}yt [Youtube url]**`}}).then(m => {m.delete(15000);}))
+              if (!args[0]) return (message.channel.send({embed: { title: ":x:Error", "color": 16711680, description: `Usage: **${prefix}play [YouTube URL]**`}}).then(m => {m.delete(15000);}))
               if (!message.guild) return;
               if (message.member.voiceChannel) {
                   message.member.voiceChannel.join().then(connection => {
@@ -191,7 +204,7 @@ const command = args.shift().toLowerCase();
         })
               }else {message.reply('You need to join a voice channel first!').then(m => {m.delete(5000)})}
   }
-  if (message.content.startsWith(prefix + "stopyt")) {
+  if (message.content.startsWith(prefix + "stop")) {
               message.delete();
               if (message.member.voiceChannel) {
               message.member.voiceChannel.leave()
@@ -253,7 +266,8 @@ if (message.author.id !== ownerID && message.author.id !== gosealeID) return mes
   const embed = new Discord.RichEmbed()
   .setColor(0xbb7de8)
   .setTimestamp()
-  .setDescription(`**Action:** Warning\n**Target:** ${user.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason}`);
+  .setTitle(`Warning`)
+  .setDescription(`**User:** ${user.tag}\n**Responsible Moderator:** ${message.author.tag}\n**Reason:** ${reason}`);
   return client.channels.get(modlog.id).send({embed});
   }
   if (command === 'purge') {
@@ -276,7 +290,8 @@ if (message.author.id !== ownerID && message.author.id !== gosealeID) return mes
   const embed = new Discord.RichEmbed()
     .setColor(0xbb7de8)
     .setTimestamp()
-    .setDescription(`**Action:** Un/mute\n**Target:** ${user.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason}`);
+  .setTitle(`Un/mute`)
+  .setDescription(`**User:** ${user.tag}\n**Responsible Moderator:** ${message.author.tag}\n**Reason:** ${reason}`);
 
   if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES_OR_PERMISSIONS')) return message.reply('I do not have the correct permissions.').catch(console.error);
 
@@ -298,7 +313,7 @@ if (!client.lockit) client.lockit = [];
   const embed = new Discord.RichEmbed()
   .setColor(0xbb7de8)
   .setTimestamp()
-  .addField('Action:', 'Channel Lockdown')
+  .setTitle('Channel Disabled')
   .addField('Channel:', message.channel)
   .addField('Moderator:', `${message.author.username}#${message.author.discriminator}`)
   .addField('Time:', `${ms(ms(time), { long:true })}`);
@@ -323,7 +338,7 @@ if (!client.lockit) client.lockit = [];
         client.lockit[message.channel.id] = setTimeout(() => {
           message.channel.overwritePermissions(message.guild.id, {
             SEND_MESSAGES: null
-          }).then(message.channel.sendMessage('Lockdown lifted.')).catch(console.error);
+          }).then(message.channel.sendMessage('Channel has been re-enabled!')).catch(console.error);
           delete client.lockit[message.channel.id];
         }, ms(time));
 
@@ -347,7 +362,8 @@ if (!client.lockit) client.lockit = [];
   const embed = new Discord.RichEmbed()
     .setColor(0xbb7de8)
     .setTimestamp()
-    .setDescription(`**Action:** Ban\n**Target:** ${user.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason}`);
+  .setTitle(`Ban`)
+  .setDescription(`**User:** ${user.tag}\n**Responsible Moderator:** ${message.author.tag}\n**Reason:** ${reason}`);
   return client.channels.get(modlog.id).send({embed});
 }
 if (command === 'kick') {
@@ -363,8 +379,8 @@ let reason = args.slice(1).join(' ');
   message.channel.send(`**:boot: Kicked user ${user}.**`);
   const embed = new Discord.RichEmbed()
     .setColor(0xbb7de8)
-    .setTimestamp()
-    .setDescription(`**Action:** Kick\n**Target:** ${user.tag}\n**Moderator:** ${message.author.tag}\n**Reason:** ${reason}`);
+  .setTitle(`Kick`)
+  .setDescription(`**User:** ${user.tag}\n**Responsible Moderator:** ${message.author.tag}\n**Reason:** ${reason}`);
   return client.channels.get(modlog.id).send({embed});
 }
 if (command === 'unban') {
