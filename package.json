@@ -4,7 +4,7 @@
   "//3": "updating this file will download and update your packages",
   "name": "slyce-bot",
   "version": "1.0.0",
-  "description": "What am I about?",
+  "description": "A multipurpose discord bot",
   "scripts": {
     "start": "node server.js"
   },
