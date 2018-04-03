@@ -11,6 +11,7 @@ const message_log = new PersistentCollection({name: 'Message_log'}); //For prefi
 const defaultSettings = { //For prefix
   prefix: "/s/"
 }
+const startedTime = Date.now();
 const token = process.env.SECRET
 const ownerID = "230880116035551233"
 const gosealeID = "229016449593769984"
@@ -93,7 +94,7 @@ const command = args.shift().toLowerCase();
     .addField(`**Fun Commands:**`, `8ball cat`)
     .addField(`**Music Commands:**`, `play stop`)
     .addField(`**Math Commands:**`, `add subtract multiply divide factorial sqrt exponent pythagorean`)
-    .addField(`**Development Commands:**`, `eval restart`)
+    .addField(`**Development Commands:**`, `eval restart uptime`)
     .setColor("bb7de8")
     .setThumbnail("https://cdn.discordapp.com/attachments/282575854251278337/428661727056363521/tumblr_ncgtapL2c51qk3vnso1_500.gif")
     .setFooter(`Slyce Help`)
@@ -525,4 +526,10 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
         // Get a new cat
         this.chosen = this.cats[Math.floor(Math.random() * this.cats.length)];
   }
+	  	if (command === 'uptime') {
+		var thisTime = Date.now();
+		var uptime = thisTime - startedTime;
+    uptime /= 1000;
+		message.channel.send(`The bot has been online for ${Math.floor(uptime)} seconds.`);
+	}
 });
