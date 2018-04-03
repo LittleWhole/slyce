@@ -16,7 +16,8 @@ const ownerID = "230880116035551233"
 const gosealeID = "229016449593769984"
 client.login(token);
 client.on('ready', () => {
-    console.log(`Logged in as ${client.user.username}!`);
+    console.log(`Logged in as ${client.user.username}!`)
+    var startedTime = setTimestamp();
     client.user.setGame(`/s/help | on ${client.guilds.size} servers`)
     client.user.setStatus('idle');
 });
@@ -314,15 +315,15 @@ if (!client.lockit) client.lockit = [];
   .setTimestamp()
   .setTitle('Channel Disabled')
   .addField('Channel:', message.channel)
-  .addField('Moderator:', `${message.author.username}#${message.author.discriminator}`)
+  .addField('Responsible Moderator:', `${message.author.username}#${message.author.discriminator}`)
   .addField('Time:', `${ms(ms(time), { long:true })}`);
-  if (!time) return message.reply('You must set a duration for the lockdown in either hours, minutes or seconds');
+  if (!time) return message.reply('You must set a duration for the disabled time in either hours, minutes or seconds');
 
   if (validUnlocks.includes(time)) {
     message.channel.overwritePermissions(message.guild.id, {
       SEND_MESSAGES: null
     }).then(() => {
-      message.channel.sendMessage('Lockdown lifted.');
+      message.channel.sendMessage('Channel re-enabled!');
       clearTimeout(client.lockit[message.channel.id]);
       delete client.lockit[message.channel.id];
     }).catch(error => {
@@ -525,4 +526,9 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
         // Get a new cat
         this.chosen = this.cats[Math.floor(Math.random() * this.cats.length)];
   }
+	if (command === 'uptime') {
+		var thisTime = setTimestamp();
+		var uptime = startedTime - thisTime;
+		message.channel.send(`The bot has been online for ${ms(ms(uptime), { long:true })}`);\
+	}
 });
