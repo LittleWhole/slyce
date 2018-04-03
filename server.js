@@ -8,6 +8,7 @@ const client = new Discord.Client
 const PersistentCollection = require('enmap');       //For prefix
 const guildSettings = new PersistentCollection({name: 'guildSettings'}); //For prefix
 const message_log = new PersistentCollection({name: 'Message_log'}); //For prefix
+const hastebin = require('hastebin-gen')
 const defaultSettings = { //For prefix
   prefix: "/s/"
 }
@@ -89,7 +90,7 @@ const command = args.shift().toLowerCase();
     var help = new Discord.RichEmbed()
     .setTitle(`**Slyce Commands**`)
     .addField(`**Server Prefix:** ${prefix}`, `${prefix}prefix to change`)
-    .addField(`**Information Commands:**`, `help ping invite pfp`)
+    .addField(`**Information Commands:**`, `help ping invite pfp hastebin`)
     .addField(`**Moderation Commands:**`, `warn kick ban mute purge disablechannel`)
     .addField(`**Fun Commands:**`, `8ball cat`)
     .addField(`**Music Commands:**`, `play stop`)
@@ -536,4 +537,10 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
 		let user = message.mentions.users.first();
 		message.channel.send(`${user.avatarURL}`);
 	}
+  if (command === 'hastebin') {
+    if (args[0] === null || args[1] === null) return message.send("Please specify language and/or code!");
+    hastebin(args[1], args[0]).then(r => {
+    message.channel.send(r); 
+    }).catch(console.error);
+  }
 });
