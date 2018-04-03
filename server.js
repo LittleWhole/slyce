@@ -539,7 +539,8 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
 	}
   if (command === 'hastebin') {
     if (args[0] === null || args[1] === null) return message.send("Please specify language and/or code!");
-    hastebin(args[1], args[0]).then(r => {
+    let code = args.join(" ").slice(args[0].length + 1);
+    hastebin(code, args[0]).then(r => {
     message.channel.send(r); 
     }).catch(console.error);
   }
