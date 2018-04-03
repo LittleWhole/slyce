@@ -530,8 +530,8 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
 	  	if (command === 'uptime') {
 		var thisTime = Date.now();
 		var uptime = thisTime - startedTime;
-    uptime /= 1000;
-		message.channel.send(`The bot has been online for ${Math.floor(uptime)} seconds.`);
+	        var simpTime = ms(uptime, { long: true });   
+		message.channel.send(`The bot has been online for ${simpTime}`);
 	}
 	if (command === 'pfp') {
 		let user = message.mentions.users.first();
