@@ -12,6 +12,7 @@ const hastebin = require('hastebin-gen')
 const defaultSettings = { //For prefix
   prefix: "/s/"
 }
+const mcdata = require('mcdata-js');
 const startedTime = Date.now();
 const token = process.env.SECRET
 const ownerID = "230880116035551233"
