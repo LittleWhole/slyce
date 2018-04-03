@@ -89,7 +89,7 @@ const command = args.shift().toLowerCase();
     var help = new Discord.RichEmbed()
     .setTitle(`**Slyce Commands**`)
     .addField(`**Server Prefix:** ${prefix}`, `${prefix}prefix to change`)
-    .addField(`**Information Commands:**`, `help ping invite`)
+    .addField(`**Information Commands:**`, `help ping invite pfp`)
     .addField(`**Moderation Commands:**`, `warn kick ban mute purge disablechannel`)
     .addField(`**Fun Commands:**`, `8ball cat`)
     .addField(`**Music Commands:**`, `play stop`)
@@ -531,5 +531,9 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
 		var uptime = thisTime - startedTime;
     uptime /= 1000;
 		message.channel.send(`The bot has been online for ${Math.floor(uptime)} seconds.`);
+	}
+	if (command === 'pfp') {
+		let user = message.mentions.users.first();
+		message.channel.send(`${user.avatarURL}`);
 	}
 });
