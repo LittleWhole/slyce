@@ -21,7 +21,7 @@ client.login(token);
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.username}!`)
     client.user.setGame(`/s/help | on ${client.guilds.size} servers`)
-    client.user.setStatus('idle');
+    client.user.setStatus('online');
 });
 
 client.on("guildCreate", guild => {
