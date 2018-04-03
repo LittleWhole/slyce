@@ -3,6 +3,7 @@ dependencies:
   enmap: 2.0.1
   express: 4.16.3
   get-youtube-id: 1.0.0
+  hastebin-gen: 1.3.1
   ms: 2.1.1
   opusscript: 0.0.6
   streamdispatch: 0.1.0
@@ -432,6 +433,12 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-M0gdDxu/9gDdID11gSpqX7oALio=
+  /hastebin-gen/1.3.1:
+    dependencies:
+      snekfetch: 3.6.4
+    dev: false
+    resolution:
+      integrity: sha512-s1nz7fPrz9Lqp/RQhbhlFTLKsr6klvNW30TKBi0WOrUluHTNkOZ3wlpWbNXRgE7b3+oTS0KJ23D+FXxw48JPOA==
   /hawk/3.1.3:
     dependencies:
       boom: 2.10.1
@@ -973,6 +980,7 @@ specifiers:
   enmap: ^2.0.1
   express: ^4.16.3
   get-youtube-id: ^1.0.0
+  hastebin-gen: ^1.3.1
   ms: ^2.1.1
   opusscript: ^0.0.6
   streamdispatch: ^0.1.0
