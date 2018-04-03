@@ -17,7 +17,6 @@ const gosealeID = "229016449593769984"
 client.login(token);
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.username}!`)
-    var startedTime = setTimestamp();
     client.user.setGame(`/s/help | on ${client.guilds.size} servers`)
     client.user.setStatus('idle');
 });
@@ -526,9 +525,4 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
         // Get a new cat
         this.chosen = this.cats[Math.floor(Math.random() * this.cats.length)];
   }
-	if (command === 'uptime') {
-		var thisTime = setTimestamp();
-		var uptime = startedTime - thisTime;
-		message.channel.send(`The bot has been online for ${ms(ms(uptime), { long:true })}`);
-	}
 });
