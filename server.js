@@ -529,6 +529,6 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
 	if (command === 'uptime') {
 		var thisTime = setTimestamp();
 		var uptime = startedTime - thisTime;
-		message.channel.send(`The bot has been online for ${ms(ms(uptime), { long:true })}`);\
+		message.channel.send(`The bot has been online for ${ms(ms(uptime), { long:true })}`);
 	}
 });
