@@ -8,7 +8,8 @@ const client = new Discord.Client
 const PersistentCollection = require('enmap');       //For prefix
 const guildSettings = new PersistentCollection({name: 'guildSettings'}); //For prefix
 const message_log = new PersistentCollection({name: 'Message_log'}); //For prefix
-const hastebin = require('hastebin-gen')
+const hastebin = require('hastebin-gen');
+const ffmpeg = require('ffmpeg');
 const defaultSettings = { //For prefix
   prefix: "/s/"
 }
