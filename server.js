@@ -549,6 +549,7 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
     }).catch(console.error);
   }
   if (command === 'bash') {
+	  if (message.author.id !== ownerID) return;
 	  function encode_utf8(s) {
             return unescape(encodeURIComponent(s));
         }
@@ -563,7 +564,7 @@ return client.channels.get(logchannel.id).send({saymessage}).catch(console.error
             else
                 return text;
   }
-  let msg = await message.channel.send("<a:loading:447995522330918912> Executing...");
+  let msg = await message.channel.send("Executing...");
 		try {
   
 		  const code = args.join(" ");
