@@ -123,7 +123,7 @@ const command = args.shift().toLowerCase();
     if (message.author.id !== ownerID) return message.channel.send(":x: **No permission!** You must be bot owner LittleWhole#2107 to execute this commmand.");
     client.login(token);
     client.user.setGame(`/s/help | on ${client.guilds.size} servers`)
-    client.user.setStatus('idle');
+    client.user.setStatus('online');
     message.channel.send(`:white_check_mark: **The bot has been successfully restarted.**`);
   }
   if (command === 'add') {
