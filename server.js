@@ -261,6 +261,7 @@ if (message.author.id !== ownerID && message.author.id !== gosealeID) return mes
   }
   
   if (command === 'warn') {
+	if (!message.author.hasPermission('KICK_MEMBERS')) return message.reply("You do not have adequate permissions!");
       let reason = args.slice(1).join(' ');
   let user = message.mentions.users.first();
   let modlog = message.guild.channels.find('name', 'mod-logs');
@@ -276,6 +277,7 @@ if (message.author.id !== ownerID && message.author.id !== gosealeID) return mes
   return client.channels.get(modlog.id).send({embed});
   }
   if (command === 'purge') {
+	  if (!message.author.hasPermission('MANAGE_MESSAGES')) return message.reply("You do not have adequate permissions!");
     let messagecount = parseInt(args.join(' '));
   message.channel.fetchMessages({
     limit: messagecount
@@ -312,6 +314,7 @@ if (message.author.id !== ownerID && message.author.id !== gosealeID) return mes
 }
 
 if (command === 'disablechannel') {
+	if (!message.author.hasPermission('MANAGE_MESSAGES')) return message.reply("You do not have adequate permissions!");
 if (!client.lockit) client.lockit = [];
   let time = args.join(' ');
   let validUnlocks = ['release', 'unlock'];
@@ -354,6 +357,7 @@ if (!client.lockit) client.lockit = [];
   }
 }
     if (command === 'ban') {
+	    if (!message.author.hasPermission('BAN_MEMBERS')) return message.reply("You do not have adequate permissions!");
     let reason = args.slice(1).join(' ');
   let user = message.mentions.users.first();
   let modlog = message.guild.channels.find('name', 'mod-logs');
@@ -372,6 +376,7 @@ if (!client.lockit) client.lockit = [];
   return client.channels.get(modlog.id).send({embed});
 }
 if (command === 'kick') {
+	if (!message.author.hasPermission('KICK_MEMBERS')) return message.reply("You do not have adequate permissions!");
 let reason = args.slice(1).join(' ');
   let user = message.mentions.users.first();
   let modlog = message.guild.channels.find('name', 'mod-logs');
@@ -389,6 +394,7 @@ let reason = args.slice(1).join(' ');
   return client.channels.get(modlog.id).send({embed});
 }
 if (command === 'unban') {
+	if (!message.author.hasPermission('BAN_MEMBERS')) return message.reply("You do not have adequate permissions!");
 let reason = args.slice(1).join(' ');
   client.unbanReason = reason;
   client.unbanAuth = message.author;
